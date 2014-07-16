@@ -2,6 +2,7 @@
 
 var user = require('../lib/user'),
   api = require('../lib/api'),
+  config = require('../lib/config'),
   moment = require('moment');
 
 user.createUserAuth(function(answers) {
@@ -22,7 +23,9 @@ user.createUserAuth(function(answers) {
       return;
     }
 
-    console.log(res.token);
+    config.writeUserConfig({
+      github_token: res.token
+    });
 
   });
 });

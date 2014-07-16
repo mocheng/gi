@@ -17,6 +17,8 @@
     "jshint-test"
   ],
   "dependencies": {
+    "underscore": "~1.6.0",
+    "userhome": "~0.1.0",
     "github": "*",
     "moment": "*",
     "inquirer": "*"
