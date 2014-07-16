@@ -5,27 +5,46 @@ var user = require('../lib/user'),
   config = require('../lib/config'),
   moment = require('moment');
 
-user.createUserAuth(function(answers) {
+function init(callback) {
+  var userConfig = config.getUserConfig();
 
-  api.authenticate({
-    type: 'basic',
-    username: answers.username,
-    password: answers.password
-  });
+  if (!userConfig.github_token) {
+    return askLogin(function() {
+      callback();
+    });
+  }
 
-  api.authorization.create({
-    scopes: ['user', 'public_repo', 'repo', 'repo:status', 'delete_repo', 'gist'],
-    note: 'gi (' + moment().format('MMMM YYYY, hh:mm:ss a') + ')', // this should be different for each request
-    note_url: 'https://github.com/mocheng/gi'
-  }, function(err, res) {
-    if (err) {
-      console.log('Fail to get Github auth: ' + err);
-      return;
-    }
+  callback();
+}
 
-    config.writeUserConfig({
-      github_token: res.token
+function askLogin(callback) {
+  user.createUserAuth(function(answers) {
+
+    api.authenticate({
+      type: 'basic',
+      username: answers.username,
+      password: answers.password
     });
 
+    api.authorization.create({
+      scopes: ['user', 'public_repo', 'repo', 'repo:status', 'delete_repo', 'gist'],
+      note: 'gi (' + moment().format('MMMM YYYY, hh:mm:ss a') + ')', // this should be different for each request
+      note_url: 'https://github.com/mocheng/gi'
+    }, function(err, res) {
+      if (err) {
+        console.log('Fail to get Github auth: ' + err);
+        return;
+      }
+
+      config.writeUserConfig({
+        github_token: res.token
+      });
+
+      callback();
+    });
   });
+}
+
+init(function() {
+  console.log('done');
 });
