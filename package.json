@@ -5,8 +5,23 @@
   "keywords": [],
   "author": "Morgan Cheng <morgan.chengmo@gmail.com>",
   "repository": { "type": "git", "url": "git://github.com//gi.git" },
-  "dependencies": {},
+  "scripts": {
+    "test": "mocha --recursive --bail --reporter spec test",
+    "jshint-lib": "jshint lib",
+    "jshint-bin": "jshint bin",
+    "jshint-test": "jshint test"
+  },
+  "pre-commit": [
+    "jshint-lib",
+    "jshint-bin",
+    "jshint-test"
+  ],
+  "dependencies": {
+    "inquirer": "*"
+  },
   "devDependencies": {
+    "pre-commit": "~0.0.9",
+    "jshint": "~2.4.4",
     "mocha": "*",
     "should": "*"
   },
