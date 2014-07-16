@@ -1,0 +1,14 @@
+{
+  "name": "gi",
+  "version": "0.0.1",
+  "description": "GitHub command line interactive tool made with NodeJS.",
+  "keywords": [],
+  "author": "Morgan Cheng <morgan.chengmo@gmail.com>",
+  "repository": { "type": "git", "url": "git://github.com//gi.git" },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "main": "index"
+}
