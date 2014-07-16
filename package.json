@@ -17,6 +17,8 @@
     "jshint-test"
   ],
   "dependencies": {
+    "github": "*",
+    "moment": "*",
     "inquirer": "*"
   },
   "devDependencies": {
