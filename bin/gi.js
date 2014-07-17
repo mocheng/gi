@@ -34,7 +34,7 @@ function askLogin(callback) {
       note: 'gi (' + moment().format('MMMM YYYY, hh:mm:ss a') + ')', // this should be different for each request
       note_url: 'https://github.com/mocheng/gi'
     }, function(err, res) {
-      cli.spinner('asking github ... done', true);
+      cli.spinner('asking github ... responded', true);
       console.log();
 
       if (err) {
