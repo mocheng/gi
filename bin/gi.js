@@ -4,6 +4,7 @@ var cli = require('cli'),
   moment = require('moment'),
   user = require('../lib/user'),
   api = require('../lib/api'),
+  logger = require('../lib/logger'),
   config = require('../lib/config');
 
 function init(callback) {
@@ -34,11 +35,10 @@ function askLogin(callback) {
       note: 'gi (' + moment().format('MMMM YYYY, hh:mm:ss a') + ')', // this should be different for each request
       note_url: 'https://github.com/mocheng/gi'
     }, function(err, res) {
-      cli.spinner('asking github ... responded', true);
-      console.log();
+      cli.spinner('asking github ... responded\r\n', true);
 
       if (err) {
-        console.log('Fail to get Github auth: ' + err);
+        logger.error('Fail to get Github auth: ' + err);
         return;
       }
 
@@ -52,5 +52,5 @@ function askLogin(callback) {
 }
 
 init(function() {
-  console.log('done');
+  logger.info('done');
 });

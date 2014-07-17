@@ -21,6 +21,7 @@
     "userhome": "~0.1.0",
     "github": "*",
     "moment": "*",
+    "cli-log": "~0.0.8",
     "cli": "*",
     "inquirer": "*"
   },
