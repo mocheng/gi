@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-var user = require('../lib/user'),
+var cli = require('cli'),
+  moment = require('moment'),
+  user = require('../lib/user'),
   api = require('../lib/api'),
-  config = require('../lib/config'),
-  moment = require('moment');
+  config = require('../lib/config');
 
 function init(callback) {
   var userConfig = config.getUserConfig();
@@ -26,11 +27,16 @@ function askLogin(callback) {
       password: answers.password
     });
 
+    cli.spinner('asking github ... ');
+
     api.authorization.create({
       scopes: ['user', 'public_repo', 'repo', 'repo:status', 'delete_repo', 'gist'],
       note: 'gi (' + moment().format('MMMM YYYY, hh:mm:ss a') + ')', // this should be different for each request
       note_url: 'https://github.com/mocheng/gi'
     }, function(err, res) {
+      cli.spinner('asking github ... responded', true);
+      console.log();
+
       if (err) {
         console.log('Fail to get Github auth: ' + err);
         return;
