@@ -2,8 +2,10 @@
 
 var cli = require('cli'),
   moment = require('moment'),
+  inquirer = require('inquirer'),
   user = require('../lib/user'),
   api = require('../lib/api'),
+  issue = require('../lib/issue'),
   logger = require('../lib/logger'),
   config = require('../lib/config');
 
@@ -51,6 +53,41 @@ function askLogin(callback) {
   });
 }
 
+
+function showMainMenu() {
+
+  cli.spinner('asking github ... ');
+  issue.getIssues(function(err, issues) {
+    cli.spinner('asking github ... responded\r\n', true);
+
+    if (err) {
+      logger.oops('Fail to read from Github');
+      return;
+    }
+
+    var issueQuestion = {
+      type: 'list',
+      name: 'issue',
+      message: 'Which issue to view?',
+      choices: issues.map(function(issue) {
+        return issue.title;
+      })
+    };
+
+    inquirer.prompt(
+      issueQuestion,
+      function(answers) {
+        logger.log(answers);
+      }
+    );
+  });
+
+}
+
+
 init(function() {
+
+  showMainMenu();
+
   logger.info('done');
 });
